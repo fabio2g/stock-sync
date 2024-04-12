@@ -1,8 +1,7 @@
 package com.github.fabio2g.stocksync.dto;
 
-import com.github.fabio2g.stocksync.enums.CategoryEnum;
 
-import java.time.Instant;
+import com.github.fabio2g.stocksync.enums.ProductCategoryEnum;
 
 public record ProductDTO(
         String id,
@@ -14,8 +13,6 @@ public record ProductDTO(
         double price,
         int stock,
         int sales,
-        CategoryEnum category,
-        Instant createAt,
-        Instant updateAt
+        ProductCategoryEnum category
 ) {
 }

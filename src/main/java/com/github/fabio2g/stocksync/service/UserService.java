@@ -1,7 +1,7 @@
 package com.github.fabio2g.stocksync.service;
 
 import com.github.fabio2g.stocksync.dto.UserDTO;
-import com.github.fabio2g.stocksync.exception.UserSaveException;
+import com.github.fabio2g.stocksync.exception.UserException;
 import com.github.fabio2g.stocksync.model.User;
 import com.github.fabio2g.stocksync.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class UserService {
 
     public UserDTO save(UserDTO userDTO) {
         if (userRepository.findByLogin(userDTO.login()) != null) {
-            throw new UserSaveException("Erro de cadastro: Este login já está em uso por outro usuário.");
+            throw new UserException("Erro de cadastro: Este login já está em uso por outro usuário.");
         }
 
         User entity = new User(

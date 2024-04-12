@@ -1,6 +1,6 @@
 package com.github.fabio2g.stocksync.model;
 
-import com.github.fabio2g.stocksync.enums.CategoryEnum;
+import com.github.fabio2g.stocksync.enums.ProductCategoryEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class Product {
     private double price;
     private int stock;
     private int sales;
-    private CategoryEnum category;
+    private ProductCategoryEnum category;
     private Instant createAt;
     private Instant updateAt;
 
@@ -38,9 +38,7 @@ public class Product {
             double price,
             int stock,
             int sales,
-            CategoryEnum category,
-            Instant createAt,
-            Instant updateAt
+            ProductCategoryEnum category
     ) {
         this.title = title;
         this.description = description;
@@ -51,7 +49,5 @@ public class Product {
         this.stock = stock;
         this.sales = sales;
         this.category = category;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
     }
 }
