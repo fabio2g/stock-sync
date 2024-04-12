@@ -7,6 +7,8 @@ import com.github.fabio2g.stocksync.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -21,8 +23,7 @@ public class UserService {
                 userDTO.name(),
                 userDTO.login(),
                 userDTO.password(),
-                userDTO.registration(),
-                userDTO.role()
+                userDTO.registration()
         );
 
         User newUser = userRepository.save(entity);
@@ -35,5 +36,24 @@ public class UserService {
                 newUser.getRegistration(),
                 newUser.getRole()
         );
+    }
+
+    public UserDTO findById(long id) {
+        Optional<User> userEntity = userRepository.findById(id);
+
+        if (userEntity.isPresent()) {
+            User user = userEntity.get();
+
+            return new UserDTO(
+                    user.getId(),
+                    user.getName(),
+                    user.getLogin(),
+                    user.getPassword(),
+                    user.getRegistration(),
+                    user.getRole()
+            );
+        } else {
+            return new UserDTO(null, null, null, null, null, null);
+        }
     }
 }

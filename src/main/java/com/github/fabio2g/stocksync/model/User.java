@@ -1,5 +1,6 @@
 package com.github.fabio2g.stocksync.model;
 
+import com.github.fabio2g.stocksync.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-@Table(name ="tb_users")
+@Table(name = "tb_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +21,13 @@ public class User {
     private String login;
     private String password;
     private String registration;
-    private String role;
+    private RoleEnum role;
 
-    public User(String name, String login, String password, String registration, String role) {
+    public User(String name, String login, String password, String registration) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.registration = registration;
-        this.role = role;
+        this.role = RoleEnum.USER;
     }
 }
