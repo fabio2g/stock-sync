@@ -22,6 +22,7 @@ public class User {
     private String password;
     private String registration;
     private RoleEnum role;
+    private Boolean isDeleted;
 
     public User(String name, String login, String password, String registration) {
         this.name = name;
@@ -29,5 +30,6 @@ public class User {
         this.password = password;
         this.registration = registration;
         this.role = RoleEnum.USER;
+        this.isDeleted = false;
     }
 }

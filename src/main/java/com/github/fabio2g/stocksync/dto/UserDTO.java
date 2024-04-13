@@ -8,6 +8,7 @@ public record UserDTO(
         String login,
         String password,
         String registration,
-        RoleEnum role
+        RoleEnum role,
+        Boolean isDeleted
 ) {
 }

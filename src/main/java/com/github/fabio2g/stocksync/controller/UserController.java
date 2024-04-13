@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -36,4 +36,22 @@ public class UserController {
 
         return ResponseEntity.ok().body(userDTOs);
     }
+
+    @GetMapping("delete/{id}")
+    private ResponseEntity<Map<String, Object>> delete(@PathVariable long id) {
+        boolean deleted = userService.delete(id);
+
+        Map<String, Object> json = new LinkedHashMap<>();
+
+        if (!deleted) {
+            json.put("status", "failed");
+            json.put("message", "Usuário com ID " + id + " não encontrado ou não pôde ser excluído.");
+            return ResponseEntity.badRequest().body(json);
+        }
+
+        json.put("status", "success");
+        json.put("message", "Usuário com ID " + id + " excluído com sucesso.");
+        return ResponseEntity.ok().body(json);
+    }
 }
+

@@ -4,12 +4,11 @@ import com.github.fabio2g.stocksync.dto.UserDTO;
 import com.github.fabio2g.stocksync.exception.UserException;
 import com.github.fabio2g.stocksync.model.User;
 import com.github.fabio2g.stocksync.repository.UserRepository;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +36,8 @@ public class UserService {
                 newUser.getLogin(),
                 newUser.getPassword(),
                 newUser.getRegistration(),
-                newUser.getRole()
+                newUser.getRole(),
+                newUser.getIsDeleted()
         );
     }
 
@@ -53,10 +53,11 @@ public class UserService {
                     user.getLogin(),
                     user.getPassword(),
                     user.getRegistration(),
-                    user.getRole()
+                    user.getRole(),
+                    user.getIsDeleted()
             );
         } else {
-            return new UserDTO(null, null, null, null, null, null);
+            return new UserDTO(null, null, null, null, null, null, null);
         }
     }
 
@@ -70,10 +71,24 @@ public class UserService {
                         user.getLogin(),
                         user.getPassword(),
                         user.getRegistration(),
-                        user.getRole()
+                        user.getRole(),
+                        user.getIsDeleted()
                 ))
                 .collect(Collectors.toList());
 
         return userDTOs;
+    }
+
+    public Boolean delete(long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            user.setIsDeleted(true);
+            userRepository.save(user);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
