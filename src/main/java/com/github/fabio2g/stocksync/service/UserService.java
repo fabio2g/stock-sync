@@ -7,7 +7,10 @@ import com.github.fabio2g.stocksync.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -55,5 +58,22 @@ public class UserService {
         } else {
             return new UserDTO(null, null, null, null, null, null);
         }
+    }
+
+    public List<UserDTO> findAll() {
+        List<User> users = userRepository.findAll();
+
+        List<UserDTO> userDTOs = users.stream()
+                .map(user -> new UserDTO(
+                        user.getId(),
+                        user.getName(),
+                        user.getLogin(),
+                        user.getPassword(),
+                        user.getRegistration(),
+                        user.getRole()
+                ))
+                .collect(Collectors.toList());
+
+        return userDTOs;
     }
 }
