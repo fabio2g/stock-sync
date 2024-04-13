@@ -1,4 +1,4 @@
-package com.github.fabio2g.stocksync.enums;
+package com.github.fabio2g.stocksync.enums.user;
 
 public enum RoleEnum {
     ADMIN("admin"),

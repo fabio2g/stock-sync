@@ -1,4 +1,4 @@
-package com.github.fabio2g.stocksync.enums;
+package com.github.fabio2g.stocksync.enums.product;
 
 public enum ColorEnum {
     VERMELHO(1),

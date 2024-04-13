@@ -1,6 +1,8 @@
 package com.github.fabio2g.stocksync.model;
 
-import com.github.fabio2g.stocksync.enums.ProductCategoryEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.github.fabio2g.stocksync.enums.product.CategoryEnum;
+import com.github.fabio2g.stocksync.enums.product.ColorEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,36 +19,40 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String title;
+    private String name;
     private String description;
-    private String serie;
+    private String reference;
+    private String codebar;
     private String brand;
-    private String color;
-    private double price;
+    private ColorEnum color;
+    private double purchasePrice;
+    private double salePrice;
+    private float profitMargin;
     private int stock;
+    private int minStock;
+    private int maxStock;
     private int sales;
-    private ProductCategoryEnum category;
+    private CategoryEnum category;
+    private String supplier;
+    private String shippingCompany;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant createAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant updateAt;
 
-    public Product(
-            String title,
-            String description,
-            String serie,
-            String brand,
-            String color,
-            double price,
-            int stock,
-            int sales,
-            ProductCategoryEnum category
-    ) {
-        this.title = title;
+    public Product(String name, String description, String reference, String codebar, String brand, ColorEnum color, double purchasePrice, double salePrice, float profitMargin, int stock, int minStock, int maxStock, int sales, CategoryEnum category) {
+        this.name = name;
         this.description = description;
-        this.serie = serie;
+        this.reference = reference;
+        this.codebar = codebar;
         this.brand = brand;
         this.color = color;
-        this.price = price;
+        this.purchasePrice = purchasePrice;
+        this.salePrice = salePrice;
+        this.profitMargin = profitMargin;
         this.stock = stock;
+        this.minStock = minStock;
+        this.maxStock = maxStock;
         this.sales = sales;
         this.category = category;
     }

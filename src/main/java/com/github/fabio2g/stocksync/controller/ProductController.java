@@ -17,6 +17,10 @@ public class ProductController {
     public ResponseEntity save(@RequestBody ProductDTO productDTO) {
         ProductDTO productResponse = productService.save(productDTO);
 
+        if(productResponse.id() == null) {
+            return ResponseEntity.badRequest().body(productResponse);
+        }
+
         return ResponseEntity.ok().body(productResponse);
     }
 }

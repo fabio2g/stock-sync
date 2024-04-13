@@ -1,6 +1,6 @@
 package com.github.fabio2g.stocksync.model;
 
-import com.github.fabio2g.stocksync.enums.RoleEnum;
+import com.github.fabio2g.stocksync.enums.user.RoleEnum;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

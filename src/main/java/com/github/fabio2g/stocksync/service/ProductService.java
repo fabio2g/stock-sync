@@ -1,7 +1,6 @@
 package com.github.fabio2g.stocksync.service;
 
 import com.github.fabio2g.stocksync.dto.ProductDTO;
-import com.github.fabio2g.stocksync.exception.ProductException;
 import com.github.fabio2g.stocksync.model.Product;
 import com.github.fabio2g.stocksync.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,35 +12,69 @@ public class ProductService {
     ProductRepository productRepository;
 
     public ProductDTO save(ProductDTO productDTO) {
-        if (productRepository.findBySerie(productDTO.serie()) != null) {
-            throw new ProductException("Erro no cadastro: O produto com número de série '" + productDTO.serie() + "' já está cadastrado.");
+        if (productRepository.findByReference(productDTO.reference()) != null) {
+            return new ProductDTO(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
         }
 
         Product entity = new Product(
-                productDTO.title(),
+                productDTO.name(),
                 productDTO.description(),
-                productDTO.serie(),
+                productDTO.reference(),
+                productDTO.codebar(),
                 productDTO.brand(),
                 productDTO.color(),
-                productDTO.price(),
+                productDTO.purchasePrice(),
+                productDTO.salePrice(),
+                productDTO.profitMargin(),
                 productDTO.stock(),
+                productDTO.minStock(),
+                productDTO.maxStock(),
                 productDTO.sales(),
                 productDTO.category()
         );
 
-        Product newProduct = productRepository.save(entity);
+        Product product = productRepository.save(entity);
 
         return new ProductDTO(
-                newProduct.getId(),
-                newProduct.getTitle(),
-                newProduct.getDescription(),
-                newProduct.getSerie(),
-                newProduct.getBrand(),
-                newProduct.getColor(),
-                newProduct.getPrice(),
-                newProduct.getStock(),
-                newProduct.getSales(),
-                newProduct.getCategory()
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getReference(),
+                product.getCodebar(),
+                product.getBrand(),
+                product.getColor(),
+                product.getPurchasePrice(),
+                product.getSalePrice(),
+                product.getProfitMargin(),
+                product.getStock(),
+                product.getMinStock(),
+                product.getMaxStock(),
+                product.getSales(),
+                product.getCategory(),
+                product.getSupplier(),
+                product.getShippingCompany(),
+                product.getCreateAt(),
+                product.getUpdateAt()
         );
     }
 }

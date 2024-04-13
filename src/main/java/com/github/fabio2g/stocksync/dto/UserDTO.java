@@ -1,6 +1,6 @@
 package com.github.fabio2g.stocksync.dto;
 
-import com.github.fabio2g.stocksync.enums.RoleEnum;
+import com.github.fabio2g.stocksync.enums.user.RoleEnum;
 
 public record UserDTO(
         Long id,

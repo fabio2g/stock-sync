@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProductRepository extends JpaRepository<Product, String> {
     @Query
-    Product findBySerie(String serie);
+    Product findByReference(String reference);
 }
