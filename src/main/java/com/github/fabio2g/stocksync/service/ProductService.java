@@ -49,7 +49,6 @@ public class ProductService {
                 productDTO.stock(),
                 productDTO.minStock(),
                 productDTO.maxStock(),
-                productDTO.sales(),
                 productDTO.category()
         );
 
@@ -69,7 +68,7 @@ public class ProductService {
                 product.getStock(),
                 product.getMinStock(),
                 product.getMaxStock(),
-                product.getSales(),
+                product.getTotalSales(),
                 product.getCategory(),
                 product.getSupplier(),
                 product.getShippingCompany(),

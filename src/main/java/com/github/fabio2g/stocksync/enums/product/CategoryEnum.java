@@ -14,6 +14,7 @@ public enum CategoryEnum {
     SHORTS("Shorts"),
     MACACAO("Macacao"),
     CHAPEU("Chapeu"),
+    CALCADO("Calcado"),
     MEIA("Meia");
 
     private final String type;

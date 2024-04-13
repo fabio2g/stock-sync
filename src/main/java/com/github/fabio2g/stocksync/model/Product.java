@@ -31,7 +31,7 @@ public class Product {
     private int stock;
     private int minStock;
     private int maxStock;
-    private int sales;
+    private int totalSales;
     private CategoryEnum category;
     private String supplier;
     private String shippingCompany;
@@ -40,7 +40,7 @@ public class Product {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant updateAt;
 
-    public Product(String name, String description, String reference, String codebar, String brand, ColorEnum color, double purchasePrice, double salePrice, float profitMargin, int stock, int minStock, int maxStock, int sales, CategoryEnum category) {
+    public Product(String name, String description, String reference, String codebar, String brand, ColorEnum color, double purchasePrice, double salePrice, float profitMargin, int stock, int minStock, int maxStock, CategoryEnum category) {
         this.name = name;
         this.description = description;
         this.reference = reference;
@@ -53,7 +53,6 @@ public class Product {
         this.stock = stock;
         this.minStock = minStock;
         this.maxStock = maxStock;
-        this.sales = sales;
         this.category = category;
     }
 }
