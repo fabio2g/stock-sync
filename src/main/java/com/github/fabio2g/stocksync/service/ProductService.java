@@ -6,41 +6,25 @@ import com.github.fabio2g.stocksync.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ProductService {
+
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     public ProductDTO save(ProductDTO productDTO) {
         if (productRepository.findByReference(productDTO.reference()) != null) {
-            return new ProductDTO(
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
+            return ProductDTO.empty();
         }
+
 
         Product entity = new Product(
                 productDTO.name(),
                 productDTO.description(),
                 productDTO.reference(),
-                productDTO.codebar(),
+                productDTO.barcode(),
                 productDTO.brand(),
                 productDTO.color(),
                 productDTO.purchasePrice(),
@@ -59,7 +43,7 @@ public class ProductService {
                 product.getName(),
                 product.getDescription(),
                 product.getReference(),
-                product.getCodebar(),
+                product.getBarcode(),
                 product.getBrand(),
                 product.getColor(),
                 product.getPurchasePrice(),
@@ -70,8 +54,8 @@ public class ProductService {
                 product.getMaxStock(),
                 product.getTotalSales(),
                 product.getCategory(),
-                product.getSupplier(),
                 product.getShippingCompany(),
+                new ArrayList<>(product.getSuppliers()),
                 product.getCreateAt(),
                 product.getUpdateAt()
         );

@@ -1,10 +1,13 @@
 package com.github.fabio2g.stocksync.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,6 +41,9 @@ public class Supllier {
     private boolean supplierStatus;
     private Instant createAt;
     private Instant updateAt;
+
+    @ManyToMany(mappedBy = "suppliers")
+    private List<Product> products = new ArrayList<>();
 
     public Supllier(String name, String corporateReason, String description, String site, String branchOfActivity, String cnpj, String cep, String address, String neighborhood, String city, String state, String seller, String email, String telephone, String celPhone, String fax, String mailbox, String account, String bank, String agency, boolean supplierStatus) {
         this.name = name;
