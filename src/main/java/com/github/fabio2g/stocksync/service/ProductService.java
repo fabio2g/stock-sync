@@ -23,7 +23,6 @@ public class ProductService {
         }
 
         String barcode = BarcodeGenerator.generateBarcode(productDTO.reference());
-        BarcodeGenerator.generateImageBarcode(productDTO.reference(), barcode);
 
         Product entity = new Product(
                 productDTO.name(),
@@ -62,6 +61,23 @@ public class ProductService {
         return convertToDTO(product.get());
     }
 
+
+    public void printBarcodeImage(String productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+
+        if (productOptional.isEmpty()) {
+            throw new RuntimeException("Produto não encontrado para o ID: " + productId);
+        }
+
+        Product product = productOptional.get();
+
+        if (product.getBarcode() == null || product.getBarcode().isEmpty()) {
+            throw new RuntimeException("O produto com ID " + productId + " não possui um código de barras.");
+        }
+
+        BarcodeGenerator.generateImageBarcode(product.getReference(), product.getBarcode());
+    }
+
     private ProductDTO convertToDTO(Product product) {
         return new ProductDTO(
                 product.getId(),
@@ -84,21 +100,5 @@ public class ProductService {
                 product.getCreateAt(),
                 product.getUpdateAt()
         );
-    }
-
-    public void printBarcodeImage(String productId) {
-        Optional<Product> productOptional = productRepository.findById(productId);
-
-        if (productOptional.isEmpty()) {
-            throw new RuntimeException("Produto não encontrado para o ID: " + productId);
-        }
-
-        Product product = productOptional.get();
-
-        if (product.getBarcode() == null || product.getBarcode().isEmpty()) {
-            throw new RuntimeException("O produto com ID " + productId + " não possui um código de barras.");
-        }
-
-        //BarcodeGenerator.generateImageBarcode(product.getReference(), product.getBarcode());
     }
 }
