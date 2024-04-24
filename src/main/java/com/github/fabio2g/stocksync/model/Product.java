@@ -13,7 +13,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 @Getter
 @Setter
@@ -28,7 +27,10 @@ public class Product {
     private String name;
     private String description;
     private String reference;
+
+    @Column(columnDefinition = "TEXT")
     private String barcode;
+
     private String brand;
     private ColorEnum color;
     private double purchasePrice;

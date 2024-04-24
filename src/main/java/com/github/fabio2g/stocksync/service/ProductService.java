@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -19,12 +22,14 @@ public class ProductService {
             return ProductDTO.empty();
         }
 
+        String barcode = BarcodeGenerator.generateBarcode(productDTO.reference());
+        BarcodeGenerator.generateImageBarcode(productDTO.reference(), barcode);
 
         Product entity = new Product(
                 productDTO.name(),
                 productDTO.description(),
                 productDTO.reference(),
-                productDTO.barcode(),
+                barcode,
                 productDTO.brand(),
                 productDTO.color(),
                 productDTO.purchasePrice(),
@@ -37,7 +42,27 @@ public class ProductService {
         );
 
         Product product = productRepository.save(entity);
+        return convertToDTO(product);
+    }
 
+    public List<ProductDTO> findAll() {
+
+        List<Product> products = productRepository.findAll();
+
+        List<ProductDTO> productDTOS = products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return productDTOS;
+    }
+
+    public ProductDTO findById(String id) {
+        Optional<Product> product = productRepository.findById(id);
+
+        return convertToDTO(product.get());
+    }
+
+    private ProductDTO convertToDTO(Product product) {
         return new ProductDTO(
                 product.getId(),
                 product.getName(),
@@ -59,5 +84,21 @@ public class ProductService {
                 product.getCreateAt(),
                 product.getUpdateAt()
         );
+    }
+
+    public void printBarcodeImage(String productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+
+        if (productOptional.isEmpty()) {
+            throw new RuntimeException("Produto não encontrado para o ID: " + productId);
+        }
+
+        Product product = productOptional.get();
+
+        if (product.getBarcode() == null || product.getBarcode().isEmpty()) {
+            throw new RuntimeException("O produto com ID " + productId + " não possui um código de barras.");
+        }
+
+        //BarcodeGenerator.generateImageBarcode(product.getReference(), product.getBarcode());
     }
 }
